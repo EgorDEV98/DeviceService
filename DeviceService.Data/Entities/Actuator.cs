@@ -1,5 +1,5 @@
 using CommonLib.EFCore.Interfaces;
-using DeviceService.Data.Enums;
+using DeviceService.Contracts.Enums;
 
 namespace DeviceService.Data.Entities;
 
@@ -12,6 +12,11 @@ public class Actuator : IEntity
     /// Идентификатор 
     /// </summary>
     public Guid Id { get; set; }
+
+    /// <summary>
+    /// Имя актуатора
+    /// </summary>
+    public string Name { get; set; }
     
     /// <summary>
     /// Состояние

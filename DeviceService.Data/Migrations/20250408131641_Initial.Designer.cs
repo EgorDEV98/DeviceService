@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeviceService.Data.Migrations
 {
     [DbContext(typeof(DeviceServiceDbContext))]
-    [Migration("20250407144831_Initial")]
+    [Migration("20250408131641_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,6 +39,10 @@ namespace DeviceService.Data.Migrations
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("State")
                         .IsRequired()

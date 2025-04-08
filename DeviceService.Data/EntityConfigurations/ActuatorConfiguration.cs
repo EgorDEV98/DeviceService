@@ -1,6 +1,6 @@
 using CommonLib.Other.EnumConvertor;
+using DeviceService.Contracts.Enums;
 using DeviceService.Data.Entities;
-using DeviceService.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

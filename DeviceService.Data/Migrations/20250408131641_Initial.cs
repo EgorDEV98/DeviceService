@@ -31,6 +31,7 @@ namespace DeviceService.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     State = table.Column<string>(type: "character varying(50)", nullable: false, defaultValue: "DISABLE"),
                     DeviceId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

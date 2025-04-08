@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace DeviceService.Data.Enums;
+namespace DeviceService.Contracts.Enums;
 
 /// <summary>
 /// Состояние

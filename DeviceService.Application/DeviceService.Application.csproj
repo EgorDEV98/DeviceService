@@ -10,4 +10,8 @@
       <ProjectReference Include="..\DeviceService.Data\DeviceService.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Riok.Mapperly" Version="4.2.0" />
+    </ItemGroup>
+
 </Project>
