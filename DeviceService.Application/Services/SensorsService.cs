@@ -4,7 +4,6 @@ using CommonLib.Other.DateTimeProvider;
 using DeviceService.Application.Interfaces;
 using DeviceService.Application.Mappers;
 using DeviceService.Application.Models.Params;
-using DeviceService.Contracts.Enums;
 using DeviceService.Contracts.Models.Response;
 using DeviceService.Data;
 using DeviceService.Data.Entities;
@@ -12,13 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeviceService.Application.Services;
 
-public class ActuatorsService : IActuatorsService
+public class SensorsService : ISensorsService
 {
     private readonly DeviceServiceDbContext _context;
     private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly ActuatorServiceMapper _mapper;
+    private readonly SensorServiceMapper _mapper;
 
-    public ActuatorsService(DeviceServiceDbContext context, IDateTimeProvider  dateTimeProvider, ActuatorServiceMapper mapper)
+    public SensorsService(DeviceServiceDbContext context, IDateTimeProvider dateTimeProvider, SensorServiceMapper mapper)
     {
         _context = context;
         _dateTimeProvider = dateTimeProvider;
@@ -26,27 +25,29 @@ public class ActuatorsService : IActuatorsService
     }
     
     /// <summary>
-    /// Получить конкретный актуатор
+    /// Получить датчик
     /// </summary>
     /// <param name="param">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
-    public async Task<GetActuatorResponse> GetActuatorAsync(GetActuatorParams param, CancellationToken ct)
+    public async Task<GetSensorResponse> GetSensorAsync(GetSensorParams param, CancellationToken ct)
     {
-        var entity = await _context.Actuators.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
-        if (entity is null) NotFoundException.Throw($"Actuator Id({param.Id}) is not found!");
+        var entity = await _context.Sensors
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (entity is null) NotFoundException.Throw($"Sensor Id({param.Id}) is not found!");
         return _mapper.Map(entity!);
     }
 
     /// <summary>
-    /// Получить список актуаторов
+    /// Получить список датчиков
     /// </summary>
     /// <param name="param">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
-    public async Task<IReadOnlyCollection<GetActuatorResponse>> GetActuatorsAsync(GetActuatorsParams param, CancellationToken ct)
+    public async Task<IReadOnlyCollection<GetSensorResponse>> GetSensorsAsync(GetSensorsParams param, CancellationToken ct)
     {
-        var entities = await _context.Actuators
+        var entities = await _context.Sensors
             .Include(x => x.Device)
             .WhereIf(param.Ids is { Length: > 0 }, x => param.Ids!.Contains(x.Id))
             .WhereIf(param.DeviceIds is { Length: > 0}, x => param.DeviceIds!.Contains(x.DeviceId))
@@ -62,61 +63,62 @@ public class ActuatorsService : IActuatorsService
     }
 
     /// <summary>
-    /// Добавить актуатор
+    /// Добавить датчик к устройству
     /// </summary>
     /// <param name="param">Параметры</param>
-    /// <param name="ct">Токен отмены</param>
+    /// <param name="ct">Токен</param>
     /// <returns></returns>
-    public async Task<GetActuatorResponse> AddActuatorAsync(AddActuatorParams param, CancellationToken ct)
+    public async Task<GetSensorResponse> AddSensorAsync(AddSensorParams param, CancellationToken ct)
     {
-        var isExistDevice = await _context.Devices.AnyAsync(x => x.Id == param.DeviceId, ct);
-        if (!isExistDevice) NotFoundException.Throw($"Device Id({param.DeviceId}) is not found!");
+        var deviceIsExist = await _context.Devices.AnyAsync(x => x.Id == param.DeviceId, ct);
+        if (!deviceIsExist) NotFoundException.Throw($"Device Id({param.DeviceId}) is not found!");
 
         var currentTime = _dateTimeProvider.GetCurrent();
-        var actuator = new Actuator()
+        var sensor = new Sensor()
         {
-            DeviceId = param!.DeviceId,
+            DeviceId = param.DeviceId,
             Name = param.Name,
-            State = ActuatorState.Disable,
+            MeasurementSymbol = param.MeasurementSymbol,
             CreatedDate = currentTime,
             LastUpdate = currentTime
         };
-        await _context.Actuators.AddAsync(actuator, ct);
+        await _context.Sensors.AddAsync(sensor, ct);
         await _context.SaveChangesAsync(ct);
 
-        return _mapper.Map(actuator);
+        return _mapper.Map(sensor);
     }
 
     /// <summary>
-    /// Обновить актуатор
+    /// Обновить датчик
     /// </summary>
     /// <param name="param">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
-    public async Task<GetActuatorResponse> UpdateActuatorAsync(UpdateActuatorParams param, CancellationToken ct)
+    public async Task<GetSensorResponse> UpdateSensorAsync(UpdateSensorParams param, CancellationToken ct)
     {
-        var entity = await _context.Actuators.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
-        if (entity is null) NotFoundException.Throw($"Actuator Id({param.Id}) is not found!");
+        var sensor = await _context.Sensors
+            .FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (sensor is null) NotFoundException.Throw($"Sensor Id({param.Id}) is not found!");
 
-        entity!.State = param.State ?? entity.State;
-        entity.Name = param.Name ?? entity.Name;
+        sensor!.MeasurementSymbol = param.MeasurementSymbol ?? sensor.MeasurementSymbol;
+        sensor.Name = param.Name ?? sensor.Name;
+
         await _context.SaveChangesAsync(ct);
-
-        return _mapper.Map(entity);
+        return _mapper.Map(sensor);
     }
 
     /// <summary>
-    /// Удалить актуатор
+    /// Удалить датчик
     /// </summary>
     /// <param name="param">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
-    public async Task<bool> DeleteAsync(DeleteActuatorParams param, CancellationToken ct)
+    public async Task<bool> DeleteSensorAsync(DeleteSensorParams param, CancellationToken ct)
     {
-        var entity = await _context.Actuators.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
-        if (entity is null) NotFoundException.Throw($"Actuator Id({param.Id}) is not found!");
+        var sensor = await _context.Sensors.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (sensor is null) NotFoundException.Throw($"Sensor Id({param.Id}) is not found!");
 
-        _context.Actuators.Remove(entity!);
+        _context.Sensors.Remove(sensor!);
         await _context.SaveChangesAsync(ct);
         return true;
     }

@@ -16,6 +16,11 @@ public class GetActuatorsRequest
     public Guid[]? UserIds { get; set; }
     
     /// <summary>
+    /// Список идентификаторов устройств
+    /// </summary>
+    public Guid[]? DeviceIds { get; set; }
+    
+    /// <summary>
     /// Дата создания актуатора С
     /// </summary>
     public DateTime? CreatedDateFrom { get; set; }

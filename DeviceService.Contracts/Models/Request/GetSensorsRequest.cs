@@ -1,12 +1,12 @@
-namespace DeviceService.Application.Models.Params;
+namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Модель получения списка актуаторов
+/// Модель получения списка датчиков
 /// </summary>
-public class GetActuatorsParams
+public class GetSensorsRequest
 {
     /// <summary>
-    /// Список идентификаторов актуаторов
+    /// Список идентификаторов датчиков
     /// </summary>
     public Guid[]? Ids { get; set; } 
     
@@ -21,22 +21,22 @@ public class GetActuatorsParams
     public Guid[]? UserIds { get; set; }
     
     /// <summary>
-    /// Дата создания актуатора С
+    /// Дата создания датчика С
     /// </summary>
     public DateTime? CreatedDateFrom { get; set; }
     
     /// <summary>
-    /// Дата создания актуатора До
+    /// Дата создания датчика До
     /// </summary>
     public DateTime? CreatedDateTo { get; set; }
     
     /// <summary>
-    /// Дата редактирования актуатора С
+    /// Дата редактирования датчика С
     /// </summary>
     public DateTime? LastUpdateFrom { get; set; }
     
     /// <summary>
-    /// Дата редактирования актуатора До
+    /// Дата редактирования датчика До
     /// </summary>
     public DateTime? LastUpdateTo{ get; set; }
     

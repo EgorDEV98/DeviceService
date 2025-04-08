@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddScoped<IDevicesService, DevicesService>();
         serviceCollection.AddScoped<IActuatorsService, ActuatorsService>();
+        serviceCollection.AddScoped<ISensorsService, SensorsService>();
         
         return serviceCollection;
     }
@@ -25,6 +26,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddSingleton<DeviceServiceMapper>();
         serviceCollection.AddSingleton<ActuatorServiceMapper>();
+        serviceCollection.AddSingleton<SensorServiceMapper>();
 
         return serviceCollection;
     }

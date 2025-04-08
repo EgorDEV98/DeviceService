@@ -10,25 +10,25 @@ namespace DeviceService.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ActuatorsController : ControllerBase, IActuatorsClient
+public class SensorsController : ControllerBase, ISensorsClient
 {
-    private readonly IActuatorsService _service;
+    private readonly ISensorsService _sensorsService;
 
-    public ActuatorsController(IActuatorsService service)
+    public SensorsController(ISensorsService sensorsService)
     {
-        _service = service;
+        _sensorsService = sensorsService;
     }
     
     /// <summary>
-    /// Получить конкретный актуатор
+    /// Получить датчик
     /// </summary>
-    /// <param name="id">Идентификатор актуатора</param>
+    /// <param name="id">Идентификатор датчика</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<BaseResponse<GetActuatorResponse>> GetActuatorAsync([FromRoute] Guid id, CancellationToken ct)
+    public async Task<BaseResponse<GetSensorResponse>> GetSensorAsync([FromRoute] Guid id, CancellationToken ct)
     {
-        var result = await _service.GetActuatorAsync(new GetActuatorParams()
+        var result = await _sensorsService.GetSensorAsync(new GetSensorParams()
         {
             Id = id
         }, ct);
@@ -36,23 +36,23 @@ public class ActuatorsController : ControllerBase, IActuatorsClient
     }
 
     /// <summary>
-    /// Получить список актуаторов
+    /// Получить список датчиков
     /// </summary>
     /// <param name="request">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<BaseResponse<IReadOnlyCollection<GetActuatorResponse>>> GetActuatorsAsync([FromQuery] GetActuatorsRequest request, CancellationToken ct)
+    public async Task<BaseResponse<IReadOnlyCollection<GetSensorResponse>>> GetSensorsResponse([FromQuery] GetSensorsRequest request, CancellationToken ct)
     {
-        var result = await _service.GetActuatorsAsync(new GetActuatorsParams()
+        var result = await _sensorsService.GetSensorsAsync(new GetSensorsParams()
         {
-            DeviceIds = request.DeviceIds,
             Ids = request.Ids,
             UserIds = request.UserIds,
+            DeviceIds = request.DeviceIds,
             CreatedDateFrom = request.CreatedDateFrom,
             CreatedDateTo = request.CreatedDateTo,
             LastUpdateFrom = request.LastUpdateFrom,
-            LastUpdateTo = request.LastUpdateTo,
+            LastUpdateTo = request.CreatedDateTo,
             Offset = request.Offset,
             Limit = request.Limit
         }, ct);
@@ -60,52 +60,53 @@ public class ActuatorsController : ControllerBase, IActuatorsClient
     }
 
     /// <summary>
-    /// Добавить актуатор к устройству
+    /// Добавить датчик к устройству
     /// </summary>
     /// <param name="deviceId">Идентификатор устройства</param>
     /// <param name="request">Параметры</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
-    [HttpPost("{id}")]
-    public async Task<BaseResponse<GetActuatorResponse>> AddActuatorAsync([FromRoute] Guid deviceId, [FromBody] AddActuatorRequest request, CancellationToken ct)
+    [HttpPost("{deviceId}")]
+    public async Task<BaseResponse<GetSensorResponse>> AddSensorAsync([FromRoute] Guid deviceId,[FromBody] AddSensorRequest request, CancellationToken ct)
     {
-        var result = await _service.AddActuatorAsync(new AddActuatorParams()
+        var result = await _sensorsService.AddSensorAsync(new AddSensorParams()
         {
             DeviceId = deviceId,
+            Name = request.Name,
+            MeasurementSymbol = request.MeasurementSymbol
+        }, ct);
+        return AppResponse.Create(result);
+    }
+
+    /// <summary>
+    /// Обновить датчик
+    /// </summary>
+    /// <param name="id">Идентификатор датчика</param>
+    /// <param name="request">Параметры</param>
+    /// <param name="ct">Токен</param>
+    /// <returns></returns>
+    [HttpPatch("{id}")]
+    public async Task<BaseResponse<GetSensorResponse>> UpdateSensorAsync([FromRoute] Guid id, [FromBody] UpdateSensorRequest request, CancellationToken ct)
+    {
+        var result = await _sensorsService.UpdateSensorAsync(new UpdateSensorParams()
+        {
+            Id = id,
+            MeasurementSymbol = request.MeasurementSymbol,
             Name = request.Name
         }, ct);
         return AppResponse.Create(result);
     }
 
     /// <summary>
-    /// Обновить актуатор
+    /// Удалить датчик
     /// </summary>
-    /// <param name="id">Идентификатор актуатора</param>
-    /// <param name="request">Параметры</param>
-    /// <param name="ct">Токен</param>
-    /// <returns></returns>
-    [HttpPatch("{id}")]
-    public async Task<BaseResponse<GetActuatorResponse>> UpdateActuatorAsync([FromRoute] Guid id,[FromBody] UpdateActuatorRequest request, CancellationToken ct)
-    {
-        var result = await _service.UpdateActuatorAsync(new UpdateActuatorParams()
-        {
-            Id = id,
-            Name = request.Name,
-            State = request.State
-        }, ct);
-        return AppResponse.Create(result);
-    }
-
-    /// <summary>
-    /// Удалить актуатор
-    /// </summary>
-    /// <param name="id">Идентификатор актуатора</param>
+    /// <param name="id">Идентификатор датчика</param>
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<BaseResponse> DeleteActuatorAsync(Guid id, CancellationToken ct)
+    public async Task<BaseResponse> DeleteSensorAsync([FromRoute] Guid id, CancellationToken ct)
     {
-        await _service.DeleteAsync(new DeleteActuatorParams()
+        await _sensorsService.DeleteSensorAsync(new DeleteSensorParams()
         {
             Id = id
         }, ct);
