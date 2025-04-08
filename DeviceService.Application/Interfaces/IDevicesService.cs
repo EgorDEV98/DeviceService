@@ -3,7 +3,7 @@ using DeviceService.Contracts.Models.Response;
 
 namespace DeviceService.Application.Interfaces;
 
-public interface IDeviceService
+public interface IDevicesService
 {
     public Task<GetDeviceResponse> GetDeviceAsync(GetDeviceParams param, CancellationToken ct);
     public Task<IReadOnlyCollection<GetDeviceResponse>> GetDevicesAsync(GetDevicesParams param, CancellationToken ct);

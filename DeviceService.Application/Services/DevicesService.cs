@@ -12,13 +12,13 @@ using NotImplementedException = System.NotImplementedException;
 
 namespace DeviceService.Application.Services;
 
-public class DeviceService : IDeviceService
+public class DevicesService : IDevicesService
 {
     private readonly DeviceServiceDbContext _context;
     private readonly DeviceServiceMapper _mapper;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public DeviceService(DeviceServiceDbContext context, DeviceServiceMapper mapper, IDateTimeProvider dateTimeProvider)
+    public DevicesService(DeviceServiceDbContext context, DeviceServiceMapper mapper, IDateTimeProvider dateTimeProvider)
     {
         _context = context;
         _mapper = mapper;

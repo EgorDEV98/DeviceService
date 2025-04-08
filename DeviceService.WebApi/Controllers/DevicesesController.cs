@@ -10,13 +10,13 @@ namespace DeviceService.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DevicesController : ControllerBase, IDeviceClient
+public class DevicesesController : ControllerBase, IDevicesClient
 {
-    private readonly IDeviceService _deviceService;
+    private readonly IDevicesService _devicesService;
 
-    public DevicesController(IDeviceService deviceService)
+    public DevicesesController(IDevicesService devicesService)
     {
-        _deviceService = deviceService;
+        _devicesService = devicesService;
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class DevicesController : ControllerBase, IDeviceClient
     [HttpGet("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> GetDeviceAsync([FromRoute] Guid id, CancellationToken ct)
     {
-        var result = await _deviceService.GetDeviceAsync(new GetDeviceParams()
+        var result = await _devicesService.GetDeviceAsync(new GetDeviceParams()
         {
             Id = id
         }, ct);
@@ -44,7 +44,7 @@ public class DevicesController : ControllerBase, IDeviceClient
     [HttpGet]
     public async Task<BaseResponse<IReadOnlyCollection<GetDeviceResponse>>> GetDevicesAsync([FromQuery] GetDevicesRequest request, CancellationToken ct)
     {
-        var result = await _deviceService.GetDevicesAsync(new GetDevicesParams()
+        var result = await _devicesService.GetDevicesAsync(new GetDevicesParams()
         {
             Ids = request.Ids,
             UserIds = request.UserIds,
@@ -68,7 +68,7 @@ public class DevicesController : ControllerBase, IDeviceClient
     [HttpPost("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> AddDeviceAsync([FromRoute] Guid userId, [FromBody] AddDeviceRequest request, CancellationToken ct)
     {
-        var result = await _deviceService.AddDeviceAsync(new AddDeviceParams()
+        var result = await _devicesService.AddDeviceAsync(new AddDeviceParams()
         {
             UserId = userId,
             Name = request.Name
@@ -86,7 +86,7 @@ public class DevicesController : ControllerBase, IDeviceClient
     [HttpPatch("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> UpdateDeviceAsync([FromRoute] Guid id,[FromBody] UpdateDeviceRequest request, CancellationToken ct)
     {
-        var result = await _deviceService.UpdateDeviceAsync(new UpdateDeviceParams()
+        var result = await _devicesService.UpdateDeviceAsync(new UpdateDeviceParams()
         {
             Id = id,
             Name = request.Name
@@ -103,7 +103,7 @@ public class DevicesController : ControllerBase, IDeviceClient
     [HttpDelete("{id}")]
     public async Task<BaseResponse> DeleteDeviceAsync([FromRoute] Guid id, CancellationToken ct)
     {
-        await _deviceService.DeleteDeviceAsync(new DeleteDeviceParams()
+        await _devicesService.DeleteDeviceAsync(new DeleteDeviceParams()
         {
             Id = id
         }, ct);

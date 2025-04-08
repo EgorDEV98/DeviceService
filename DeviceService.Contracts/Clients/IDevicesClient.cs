@@ -8,7 +8,7 @@ namespace DeviceService.Contracts.Clients;
 /// <summary>
 /// Клиент управления устройством
 /// </summary>
-public interface IDeviceClient
+public interface IDevicesClient
 {
     /// <summary>
     /// Получить конкретное устройство
