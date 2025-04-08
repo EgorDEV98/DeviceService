@@ -113,11 +113,7 @@ public class DevicesService : IDevicesService
     /// <returns></returns>
     public async Task<bool> DeleteDeviceAsync(DeleteDeviceParams param, CancellationToken ct)
     {
-        var entity = await _context.Devices.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
-        if (entity is null) NotFoundException.Throw($"Device Id({param.Id}) is not found");
-
-        _context.Devices.Remove(entity!);
-        await _context.SaveChangesAsync(ct);
+        await _context.Devices.Where(x => x.Id == param.Id).ExecuteDeleteAsync(ct);
         return true;
     }
 }

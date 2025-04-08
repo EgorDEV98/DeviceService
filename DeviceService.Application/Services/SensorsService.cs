@@ -115,11 +115,7 @@ public class SensorsService : ISensorsService
     /// <returns></returns>
     public async Task<bool> DeleteSensorAsync(DeleteSensorParams param, CancellationToken ct)
     {
-        var sensor = await _context.Sensors.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
-        if (sensor is null) NotFoundException.Throw($"Sensor Id({param.Id}) is not found!");
-
-        _context.Sensors.Remove(sensor!);
-        await _context.SaveChangesAsync(ct);
+        await _context.Sensors.Where(x => x.Id == param.Id).ExecuteDeleteAsync(ct);
         return true;
     }
 }

@@ -10,11 +10,11 @@ namespace DeviceService.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DevicesesController : ControllerBase, IDevicesClient
+public class DevicesController : ControllerBase, IDevicesClient
 {
     private readonly IDevicesService _devicesService;
 
-    public DevicesesController(IDevicesService devicesService)
+    public DevicesController(IDevicesService devicesService)
     {
         _devicesService = devicesService;
     }
