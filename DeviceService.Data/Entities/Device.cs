@@ -26,11 +26,13 @@ public class Device : IEntity
     /// Список датчиков устройства
     /// </summary>
     public ICollection<Sensor> Sensors { get; set; }
+        = new List<Sensor>();
     
     /// <summary>
     /// Список актуаторов устройства
     /// </summary>
     public ICollection<Actuator> Actuators { get; set; }
+        = new List<Actuator>();
     
     /// <summary>
     /// Дата создания

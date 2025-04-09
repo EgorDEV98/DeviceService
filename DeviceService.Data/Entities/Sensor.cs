@@ -36,6 +36,7 @@ public class Sensor : IEntity
     /// Результаты измерений
     /// </summary>
     public ICollection<SensorValue> SensorValues { get; set; }
+        = new List<SensorValue>();
     
     /// <summary>
     /// Дата создания

@@ -30,10 +30,10 @@ public class GetDeviceResponse
     /// <summary>
     /// Датчики
     /// </summary>
-    public GetSensorResponse[] Sensors { get; set; }
+    public IReadOnlyCollection<GetSensorResponse> Sensors { get; set; }
     
     /// <summary>
     /// Актуаторы
     /// </summary>
-    public GetActuatorResponse[] Actuators { get; set; }
+    public IReadOnlyCollection<GetActuatorResponse> Actuators { get; set; }
 }

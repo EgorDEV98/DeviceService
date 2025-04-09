@@ -64,6 +64,9 @@ public class SensorValuesService : ISensorValuesService
     /// <returns></returns>
     public async Task<GetSensorValueResponse> AddSensorValueAsync(AddSensorValueParams param, CancellationToken ct)
     {
+        var sensorIsExist = await _context.Sensors.AnyAsync(x => x.Id == param.SensorId, ct);
+        if(!sensorIsExist) NotFoundException.Throw($"Sensor Id({param.SensorId}) is not found!");
+        
         var newSensorValue = new SensorValue()
         {
             MeasurementDate = param.MeasurementDate,
@@ -85,7 +88,12 @@ public class SensorValuesService : ISensorValuesService
     /// <returns></returns>
     public async Task<bool> DeleteSensorValueAsync(DeleteSensorValueParams param, CancellationToken ct)
     {
-        await _context.SensorValues.Where(x => param.Id == x.Id).ExecuteDeleteAsync(ct);
+        var sensorValue = await _context.SensorValues
+            .FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (sensorValue is null) NotFoundException.Throw($"Sensor value Id({param.Id}) is not found!");
+        
+        _context.SensorValues.Remove(sensorValue!);
+        await _context.SaveChangesAsync(ct);
         return true;
     }
 
@@ -97,6 +105,9 @@ public class SensorValuesService : ISensorValuesService
     /// <returns></returns>
     public async Task<bool> TruncateSensorValuesAsync(TruncateSensorValuesParams param, CancellationToken ct)
     {
+        var sensorExist = await _context.Sensors.AnyAsync(x => x.Id == param.SensorId, ct);
+        if(!sensorExist) NotFoundException.Throw($"Sensor Id({param.SensorId}) is not found!");
+        
         await _context.SensorValues.Where(x => param.SensorId == x.SensorId).ExecuteDeleteAsync(ct);
         return true;
     }

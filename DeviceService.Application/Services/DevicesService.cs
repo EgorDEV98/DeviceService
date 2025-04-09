@@ -74,12 +74,13 @@ public class DevicesService : IDevicesService
     /// <returns></returns>
     public async Task<GetDeviceResponse> AddDeviceAsync(AddDeviceParams param, CancellationToken ct)
     {
+        var currentDate = _dateTimeProvider.GetCurrent();
         var newDevice = new Device()
         {
             UserId = param.UserId,
             Name = param.Name,
-            CreatedDate = _dateTimeProvider.GetCurrent(),
-            LastUpdate = _dateTimeProvider.GetCurrent()
+            CreatedDate = currentDate,
+            LastUpdate = currentDate,
         };
 
         await _context.Devices.AddAsync(newDevice, ct);
@@ -100,6 +101,7 @@ public class DevicesService : IDevicesService
         if (entity is null) NotFoundException.Throw($"Device Id({param.Id}) is not found");
 
         entity!.Name = param.Name ?? entity!.Name;
+        entity.LastUpdate = _dateTimeProvider.GetCurrent();
         await _context.SaveChangesAsync(ct);
 
         return _mapper.Map(entity);
@@ -113,7 +115,11 @@ public class DevicesService : IDevicesService
     /// <returns></returns>
     public async Task<bool> DeleteDeviceAsync(DeleteDeviceParams param, CancellationToken ct)
     {
-        await _context.Devices.Where(x => x.Id == param.Id).ExecuteDeleteAsync(ct);
+        var currentDevice = await _context.Devices.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (currentDevice is null) NotFoundException.Throw($"Device Id({param.Id}) is not found");
+        
+        _context.Devices.Remove(currentDevice!);
+        await _context.SaveChangesAsync(ct);
         return true;
     }
 }

@@ -113,7 +113,11 @@ public class ActuatorsService : IActuatorsService
     /// <returns></returns>
     public async Task<bool> DeleteAsync(DeleteActuatorParams param, CancellationToken ct)
     {
-        await _context.Actuators.Where(x => x.Id == param.Id).ExecuteDeleteAsync(ct);
+        var entity = await _context.Actuators.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        if (entity is null) NotFoundException.Throw($"Actuator Id({param.Id}) is not found!");
+        
+        _context.Actuators.Remove(entity!);
+        await _context.SaveChangesAsync(ct);
         return true;
     }
 }
