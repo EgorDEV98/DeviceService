@@ -16,12 +16,6 @@ public static class ServiceCollectionExtensions
         
         return serviceCollection;
     }
-    public static IServiceCollection AddCommon(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-        return serviceCollection;
-    }
     
     public static IServiceCollection AddMappers(this IServiceCollection serviceCollection)
     {

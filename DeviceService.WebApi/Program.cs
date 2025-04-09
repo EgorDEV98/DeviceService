@@ -1,3 +1,4 @@
+using CommonLib;
 using CommonLib.EFCore.Extensions;
 using DeviceService.Data;
 using DeviceService.WebApi.Extensions;
