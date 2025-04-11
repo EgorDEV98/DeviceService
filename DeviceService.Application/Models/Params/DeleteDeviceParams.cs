@@ -1,7 +1,7 @@
 namespace DeviceService.Application.Models.Params;
 
 /// <summary>
-/// Удаление устройства
+/// Модель удаления устройства
 /// </summary>
 public class DeleteDeviceParams
 {

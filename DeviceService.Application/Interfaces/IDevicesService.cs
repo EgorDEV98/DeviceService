@@ -3,6 +3,9 @@ using DeviceService.Contracts.Models.Response;
 
 namespace DeviceService.Application.Interfaces;
 
+/// <summary>
+/// Интерфейс сервиса устройств
+/// </summary>
 public interface IDevicesService
 {
     public Task<GetDeviceResponse> GetDeviceAsync(GetDeviceParams param, CancellationToken ct);

@@ -26,7 +26,8 @@ public interface IDevicesClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Get("/Devices")]
-    public Task<BaseResponse<IReadOnlyCollection<GetDeviceResponse>>> GetDevicesAsync([Query(CollectionFormat.Multi)] GetDevicesRequest request, CancellationToken ct);
+    public Task<BaseResponse<IReadOnlyCollection<GetDeviceResponse>>> GetDevicesAsync([Query(CollectionFormat.Multi)] GetDevicesRequest request,
+        CancellationToken ct);
 
     /// <summary>
     /// Добавить устройство
@@ -36,7 +37,8 @@ public interface IDevicesClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Post("/Devices/{userId}")]
-    public Task<BaseResponse<GetDeviceResponse>> AddDeviceAsync(Guid userId, [Body] AddDeviceRequest request, CancellationToken ct);
+    public Task<BaseResponse<GetDeviceResponse>> AddDeviceAsync(Guid userId, [Body] AddDeviceRequest request, 
+        CancellationToken ct);
 
     /// <summary>
     /// Обновить устройство
@@ -46,7 +48,8 @@ public interface IDevicesClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Patch("/Devices/{id}")]
-    public Task<BaseResponse<GetDeviceResponse>> UpdateDeviceAsync(Guid id, [Body] UpdateDeviceRequest request, CancellationToken ct);
+    public Task<BaseResponse<GetDeviceResponse>> UpdateDeviceAsync(Guid id, [Body] UpdateDeviceRequest request, 
+        CancellationToken ct);
 
     /// <summary>
     /// Удалить устройство

@@ -1,12 +1,12 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Модель получения списка показаний с датчиков
+/// Модель получения списка показателей датчиков
 /// </summary>
 public class GetSensorValuesRequest
 {
     /// <summary>
-    /// Список идентификаторов показаний
+    /// Список идентификаторов показателей
     /// </summary>
     public Guid[]? Ids { get; set; }
     

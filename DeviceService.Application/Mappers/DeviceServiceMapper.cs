@@ -6,7 +6,8 @@ namespace DeviceService.Application.Mappers;
 
 [Mapper]
 public partial class DeviceServiceMapper
-{
+{ 
+    
     public partial GetDeviceResponse Map(Device entity);
     public partial GetDeviceResponse[] Map(Device[] entity);
 }

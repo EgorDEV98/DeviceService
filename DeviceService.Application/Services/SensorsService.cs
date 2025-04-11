@@ -48,10 +48,11 @@ public class SensorsService : ISensorsService
     public async Task<IReadOnlyCollection<GetSensorResponse>> GetSensorsAsync(GetSensorsParams param, CancellationToken ct)
     {
         var entities = await _context.Sensors
+            .AsNoTracking()
             .Include(x => x.Device)
             .WhereIf(param.Ids is { Length: > 0 }, x => param.Ids!.Contains(x.Id))
             .WhereIf(param.DeviceIds is { Length: > 0}, x => param.DeviceIds!.Contains(x.DeviceId))
-            .WhereIf(param.UserIds is { Length: > 0 }, x => param.UserIds!.Contains(x.Device.UserId))
+            .WhereIf(param.UserIds is { Length: > 0 }, x => param.UserIds!.Contains(x.Device!.UserId))
             .WhereIf(param.CreatedDateFrom.HasValue, x => x.CreatedDate >= param.CreatedDateFrom)
             .WhereIf(param.CreatedDateTo.HasValue, x => x.CreatedDate <= param.CreatedDateTo)
             .WhereIf(param.LastUpdateFrom.HasValue, x => x.LastUpdate >= param.LastUpdateFrom)

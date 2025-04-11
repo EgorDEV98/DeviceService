@@ -38,7 +38,7 @@ public class GetSensorsRequest
     /// <summary>
     /// Дата редактирования датчика До
     /// </summary>
-    public DateTime? LastUpdateTo{ get; set; }
+    public DateTime? LastUpdateTo { get; set; }
     
     /// <summary>
     /// Отступ

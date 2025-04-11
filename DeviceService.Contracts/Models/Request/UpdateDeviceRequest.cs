@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Обновление устройства
+/// Модель обновления устройства
 /// </summary>
 public class UpdateDeviceRequest
 {

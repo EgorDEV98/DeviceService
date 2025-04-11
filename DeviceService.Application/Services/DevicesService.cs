@@ -100,7 +100,7 @@ public class DevicesService : IDevicesService
         var entity = await _context.Devices.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
         if (entity is null) NotFoundException.Throw($"Device Id({param.Id}) is not found");
 
-        entity!.Name = param.Name ?? entity!.Name;
+        entity!.Name = param.Name ?? entity.Name;
         entity.LastUpdate = _dateTimeProvider.GetCurrent();
         await _context.SaveChangesAsync(ct);
 

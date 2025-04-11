@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeviceService.Data.Migrations
 {
     [DbContext(typeof(DeviceServiceDbContext))]
-    [Migration("20250409091446_Initial")]
+    [Migration("20250411091319_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -42,7 +42,8 @@ namespace DeviceService.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -71,7 +72,10 @@ namespace DeviceService.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("Умная теплица");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -98,11 +102,13 @@ namespace DeviceService.Data.Migrations
 
                     b.Property<string>("MeasurementSymbol")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 

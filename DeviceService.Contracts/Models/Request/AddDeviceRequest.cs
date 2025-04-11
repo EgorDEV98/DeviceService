@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Добавить устройство
+/// Модель добавления устройства
 /// </summary>
 public class AddDeviceRequest
 {

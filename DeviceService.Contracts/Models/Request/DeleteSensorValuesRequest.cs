@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Модель параметров массового удаления
+/// Модель массового удаления показателей
 /// </summary>
 public class DeleteSensorValuesRequest
 {

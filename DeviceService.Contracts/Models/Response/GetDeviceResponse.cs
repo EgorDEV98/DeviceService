@@ -1,5 +1,8 @@
 namespace DeviceService.Contracts.Models.Response;
 
+/// <summary>
+/// Модель получения устройства
+/// </summary>
 public class GetDeviceResponse
 {
     /// <summary>
@@ -31,9 +34,11 @@ public class GetDeviceResponse
     /// Датчики
     /// </summary>
     public IReadOnlyCollection<GetSensorResponse> Sensors { get; set; }
+        = new List<GetSensorResponse>();
     
     /// <summary>
     /// Актуаторы
     /// </summary>
     public IReadOnlyCollection<GetActuatorResponse> Actuators { get; set; }
+        = new List<GetActuatorResponse>();
 }

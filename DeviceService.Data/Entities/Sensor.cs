@@ -11,21 +11,21 @@ public class Sensor : IEntity
     /// Идентификатор
     /// </summary>
     public Guid Id { get; set; }
-    
+
     /// <summary>
     /// Название
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
     
     /// <summary>
     /// Единица измерений
     /// </summary>
-    public string MeasurementSymbol { get; set; }
-    
+    public required string MeasurementSymbol { get; set; }
+
     /// <summary>
     /// Навигационное поле
     /// </summary>
-    public Device Device { get; set; }
+    public Device? Device { get; set; }
     
     /// <summary>
     /// Внешний ключ
@@ -35,7 +35,7 @@ public class Sensor : IEntity
     /// <summary>
     /// Результаты измерений
     /// </summary>
-    public ICollection<SensorValue> SensorValues { get; set; }
+    public ICollection<SensorValue> SensorValues { get; set; } 
         = new List<SensorValue>();
     
     /// <summary>

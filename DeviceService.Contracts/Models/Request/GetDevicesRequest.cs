@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Получить список устройств
+/// Модель получения списка устройств
 /// </summary>
 public class GetDevicesRequest
 {

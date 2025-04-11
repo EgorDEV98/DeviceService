@@ -33,7 +33,9 @@ public class ActuatorsService : IActuatorsService
     /// <returns></returns>
     public async Task<GetActuatorResponse> GetActuatorAsync(GetActuatorParams param, CancellationToken ct)
     {
-        var entity = await _context.Actuators.FirstOrDefaultAsync(x => x.Id == param.Id, ct);
+        var entity = await _context.Actuators
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == param.Id, ct);
         if (entity is null) NotFoundException.Throw($"Actuator Id({param.Id}) is not found!");
         return _mapper.Map(entity!);
     }
@@ -47,10 +49,11 @@ public class ActuatorsService : IActuatorsService
     public async Task<IReadOnlyCollection<GetActuatorResponse>> GetActuatorsAsync(GetActuatorsParams param, CancellationToken ct)
     {
         var entities = await _context.Actuators
+            .AsNoTracking()
             .Include(x => x.Device)
             .WhereIf(param.Ids is { Length: > 0 }, x => param.Ids!.Contains(x.Id))
             .WhereIf(param.DeviceIds is { Length: > 0}, x => param.DeviceIds!.Contains(x.DeviceId))
-            .WhereIf(param.UserIds is { Length: > 0 }, x => param.UserIds!.Contains(x.Device.UserId))
+            .WhereIf(param.UserIds is { Length: > 0 }, x => param.UserIds!.Contains(x.Device!.UserId))
             .WhereIf(param.CreatedDateFrom.HasValue, x => x.CreatedDate >= param.CreatedDateFrom)
             .WhereIf(param.CreatedDateTo.HasValue, x => x.CreatedDate <= param.CreatedDateTo)
             .WhereIf(param.LastUpdateFrom.HasValue, x => x.LastUpdate >= param.LastUpdateFrom)

@@ -54,5 +54,6 @@ public interface ISensorValuesClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Delete("/SensorValues/{sensorId}/params")]
-    public Task<BaseResponse> TruncateSensorValuesAsync(Guid sensorId, [Query(CollectionFormat.Multi)] DeleteSensorValuesRequest request, CancellationToken ct);
+    public Task<BaseResponse> TruncateSensorValuesAsync(Guid sensorId, 
+        [Query(CollectionFormat.Multi)] DeleteSensorValuesRequest request, CancellationToken ct);
 }

@@ -23,7 +23,7 @@ public class SensorValue
     /// <summary>
     /// Навигационное поле
     /// </summary>
-    public Sensor Sensor { get; set; }
+    public Sensor? Sensor { get; set; }
     
     /// <summary>
     /// Внешний ключ

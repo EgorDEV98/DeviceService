@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeviceService.Data;
 
-public class DeviceServiceDbContext : DbContext
+public class DeviceServiceDbContext(DbContextOptions<DeviceServiceDbContext> options) : DbContext(options)
 {
     /// <summary>
     /// Устройства
@@ -25,9 +25,6 @@ public class DeviceServiceDbContext : DbContext
     /// Показания датчиков
     /// </summary>
     public DbSet<SensorValue> SensorValues { get; set; }
-
-    public DeviceServiceDbContext(DbContextOptions<DeviceServiceDbContext> options)
-        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

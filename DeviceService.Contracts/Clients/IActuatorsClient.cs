@@ -23,8 +23,7 @@ public interface IActuatorsClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Get("/Actuators")]
-    public Task<BaseResponse<IReadOnlyCollection<GetActuatorResponse>>> GetActuatorsAsync([Query(CollectionFormat.Multi)] GetActuatorsRequest request,
-        CancellationToken ct);
+    public Task<BaseResponse<IReadOnlyCollection<GetActuatorResponse>>> GetActuatorsAsync([Query(CollectionFormat.Multi)] GetActuatorsRequest request, CancellationToken ct);
 
     /// <summary>
     /// Добавить актуатор к устройству
@@ -34,8 +33,7 @@ public interface IActuatorsClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Post("/Actuators/{deviceId}")]
-    public Task<BaseResponse<GetActuatorResponse>> AddActuatorAsync(Guid deviceId, [Body] AddActuatorRequest request,
-        CancellationToken ct);
+    public Task<BaseResponse<GetActuatorResponse>> AddActuatorAsync(Guid deviceId, [Body] AddActuatorRequest request, CancellationToken ct);
 
     /// <summary>
     /// Обновить актуатор
@@ -45,8 +43,7 @@ public interface IActuatorsClient
     /// <param name="ct">Токен</param>
     /// <returns></returns>
     [Patch("/Actuators/{id}")]
-    public Task<BaseResponse<GetActuatorResponse>> UpdateActuatorAsync(Guid id, [Body] UpdateActuatorRequest request,
-        CancellationToken ct);
+    public Task<BaseResponse<GetActuatorResponse>> UpdateActuatorAsync(Guid id, [Body] UpdateActuatorRequest request, CancellationToken ct);
 
     /// <summary>
     /// Удалить актуатор

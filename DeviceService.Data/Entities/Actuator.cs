@@ -16,7 +16,7 @@ public class Actuator : IEntity
     /// <summary>
     /// Имя актуатора
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
     
     /// <summary>
     /// Состояние
@@ -26,7 +26,7 @@ public class Actuator : IEntity
     /// <summary>
     /// Навигационное поле
     /// </summary>
-    public Device Device { get; set; }
+    public Device? Device { get; set; }
     
     /// <summary>
     /// Внешний ключ

@@ -1,27 +1,27 @@
 namespace DeviceService.Contracts.Models.Response;
 
 /// <summary>
-/// Модель получения показания датчика
+/// Модель показания датчика
 /// </summary>
 public class GetSensorValueResponse
 {
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
     
     /// <summary>
     /// Показание
     /// </summary>
-    public float Value { get; set; }
+    public required float Value { get; set; }
     
     /// <summary>
     /// Дата измерения
     /// </summary>
-    public DateTime MeasurementDate { get; set; }
+    public required DateTime MeasurementDate { get; set; }
     
     /// <summary>
     /// Идентификатор датчика
     /// </summary>
-    public Guid SensorId { get; set; }
+    public required Guid SensorId { get; set; }
 }

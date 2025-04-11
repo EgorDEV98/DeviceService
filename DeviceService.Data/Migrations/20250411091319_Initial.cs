@@ -16,7 +16,7 @@ namespace DeviceService.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, defaultValue: "Умная теплица"),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -31,7 +31,7 @@ namespace DeviceService.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     State = table.Column<string>(type: "character varying(50)", nullable: false, defaultValue: "DISABLE"),
                     DeviceId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -53,8 +53,8 @@ namespace DeviceService.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    MeasurementSymbol = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    MeasurementSymbol = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     DeviceId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

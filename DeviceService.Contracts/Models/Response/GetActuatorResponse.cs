@@ -3,7 +3,7 @@ using DeviceService.Contracts.Enums;
 namespace DeviceService.Contracts.Models.Response;
 
 /// <summary>
-/// Получить актуатор
+/// Модель актуатора
 /// </summary>
 public class GetActuatorResponse
 {

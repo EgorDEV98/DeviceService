@@ -17,7 +17,13 @@ public class ActuatorConfiguration : IEntityTypeConfiguration<Actuator>
             new ConverterMappingHints(size: 50, unicode: false));
         
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.State).IsRequired().HasDefaultValue(ActuatorState.Disable).HasConversion(stateConverter);
+        builder.Property(x => x.Name)
+            .IsRequired()
+            .HasMaxLength(256);
+        builder.Property(x => x.State)
+            .IsRequired()
+            .HasDefaultValue(ActuatorState.Disable)
+            .HasConversion(stateConverter);
         builder.Property(x => x.CreatedDate).IsRequired();
         builder.Property(x => x.LastUpdate).IsRequired();
         

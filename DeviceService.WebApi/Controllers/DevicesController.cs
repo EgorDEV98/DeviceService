@@ -1,9 +1,11 @@
 using CommonLib.Response;
 using DeviceService.Application.Interfaces;
+using DeviceService.Application.Mappers;
 using DeviceService.Application.Models.Params;
 using DeviceService.Contracts.Clients;
 using DeviceService.Contracts.Models.Request;
 using DeviceService.Contracts.Models.Response;
+using DeviceService.WebApi.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceService.WebApi.Controllers;
@@ -13,10 +15,12 @@ namespace DeviceService.WebApi.Controllers;
 public class DevicesController : ControllerBase, IDevicesClient
 {
     private readonly IDevicesService _devicesService;
+    private readonly DeviceControllerMapper _mapper;
 
-    public DevicesController(IDevicesService devicesService)
+    public DevicesController(IDevicesService devicesService, DeviceControllerMapper mapper)
     {
         _devicesService = devicesService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -27,13 +31,10 @@ public class DevicesController : ControllerBase, IDevicesClient
     /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> GetDeviceAsync([FromRoute] Guid id, CancellationToken ct)
-    {
-        var result = await _devicesService.GetDeviceAsync(new GetDeviceParams()
+        => AppResponse.Create(await _devicesService.GetDeviceAsync(new GetDeviceParams()
         {
             Id = id
-        }, ct);
-        return AppResponse.Create(result);
-    }
+        }, ct));
 
     /// <summary>
     /// Получить список устройств
@@ -43,20 +44,7 @@ public class DevicesController : ControllerBase, IDevicesClient
     /// <returns></returns>
     [HttpGet]
     public async Task<BaseResponse<IReadOnlyCollection<GetDeviceResponse>>> GetDevicesAsync([FromQuery] GetDevicesRequest request, CancellationToken ct)
-    {
-        var result = await _devicesService.GetDevicesAsync(new GetDevicesParams()
-        {
-            Ids = request.Ids,
-            UserIds = request.UserIds,
-            CreatedDateFrom = request.CreatedDateFrom,
-            CreatedDateTo = request.CreatedDateTo,
-            LastUpdateFrom = request.LastUpdateFrom,
-            LastUpdateTo = request.LastUpdateTo,
-            Offset = request.Offset,
-            Limit = request.Limit
-        }, ct);
-        return AppResponse.Create(result);
-    }
+        => AppResponse.Create(await _devicesService.GetDevicesAsync(_mapper.Map(request), ct));
 
     /// <summary>
     /// Добавить устройство пользователю
@@ -67,14 +55,11 @@ public class DevicesController : ControllerBase, IDevicesClient
     /// <returns></returns>
     [HttpPost("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> AddDeviceAsync([FromRoute] Guid userId, [FromBody] AddDeviceRequest request, CancellationToken ct)
-    {
-        var result = await _devicesService.AddDeviceAsync(new AddDeviceParams()
+        => AppResponse.Create(await _devicesService.AddDeviceAsync(new AddDeviceParams()
         {
             UserId = userId,
             Name = request.Name
-        }, ct);
-        return AppResponse.Create(result);
-    }
+        }, ct));
 
     /// <summary>
     /// Обновить устройство
@@ -85,14 +70,11 @@ public class DevicesController : ControllerBase, IDevicesClient
     /// <returns></returns>
     [HttpPatch("{id}")]
     public async Task<BaseResponse<GetDeviceResponse>> UpdateDeviceAsync([FromRoute] Guid id,[FromBody] UpdateDeviceRequest request, CancellationToken ct)
-    {
-        var result = await _devicesService.UpdateDeviceAsync(new UpdateDeviceParams()
+        => AppResponse.Create(await _devicesService.UpdateDeviceAsync(new UpdateDeviceParams()
         {
             Id = id,
             Name = request.Name
-        }, ct);
-        return AppResponse.Create(result);
-    }
+        }, ct));
 
     /// <summary>
     /// Удалить устройство

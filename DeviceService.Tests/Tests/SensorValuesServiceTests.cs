@@ -4,7 +4,6 @@ using DeviceService.Application.Interfaces;
 using DeviceService.Application.Mappers;
 using DeviceService.Application.Models.Params;
 using DeviceService.Application.Services;
-using DeviceService.Contracts.Enums;
 using DeviceService.Data.Entities;
 using DeviceService.Tests.Mock;
 using FluentAssertions;

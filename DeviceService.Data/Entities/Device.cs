@@ -15,23 +15,23 @@ public class Device : IEntity
     /// <summary>
     /// Название устройства
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
     
     /// <summary>
     /// Идентификатор пользователя владельца устройства
     /// </summary>
-    public Guid UserId { get; set; }
-    
+    public required Guid UserId { get; set; }
+
     /// <summary>
     /// Список датчиков устройства
     /// </summary>
-    public ICollection<Sensor> Sensors { get; set; }
+    public ICollection<Sensor>? Sensors { get; set; }
         = new List<Sensor>();
     
     /// <summary>
     /// Список актуаторов устройства
     /// </summary>
-    public ICollection<Actuator> Actuators { get; set; }
+    public ICollection<Actuator>? Actuators { get; set; }
         = new List<Actuator>();
     
     /// <summary>

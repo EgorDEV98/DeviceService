@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Response;
 
 /// <summary>
-/// Датчик
+/// Модель датчика
 /// </summary>
 public class GetSensorResponse
 {

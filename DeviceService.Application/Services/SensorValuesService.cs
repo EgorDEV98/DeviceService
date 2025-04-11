@@ -108,7 +108,9 @@ public class SensorValuesService : ISensorValuesService
         var sensorExist = await _context.Sensors.AnyAsync(x => x.Id == param.SensorId, ct);
         if(!sensorExist) NotFoundException.Throw($"Sensor Id({param.SensorId}) is not found!");
         
-        await _context.SensorValues.Where(x => param.SensorId == x.SensorId).ExecuteDeleteAsync(ct);
+        await _context.SensorValues
+            .Where(x => param.SensorId == x.SensorId)
+            .ExecuteDeleteAsync(ct);
         return true;
     }
 }

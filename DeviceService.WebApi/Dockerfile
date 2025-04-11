@@ -7,6 +7,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+COPY nuget.config ./
 COPY ["DeviceService.WebApi/DeviceService.WebApi.csproj", "DeviceService.WebApi/"]
 RUN dotnet restore "DeviceService.WebApi/DeviceService.WebApi.csproj"
 COPY . .

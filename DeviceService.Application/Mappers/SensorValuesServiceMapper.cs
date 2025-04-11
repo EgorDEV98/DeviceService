@@ -7,6 +7,7 @@ namespace DeviceService.Application.Mappers;
 [Mapper]
 public partial class SensorValuesServiceMapper
 {
+    [MapperIgnoreSource(nameof(SensorValue.Sensor))]
     public partial GetSensorValueResponse Map(SensorValue entity);
     public partial GetSensorValueResponse[] Map(SensorValue[] entity);
 }

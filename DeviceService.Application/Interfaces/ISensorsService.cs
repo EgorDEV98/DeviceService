@@ -3,6 +3,9 @@ using DeviceService.Contracts.Models.Response;
 
 namespace DeviceService.Application.Interfaces;
 
+/// <summary>
+/// Интерфейс сервиса датчиков
+/// </summary>
 public interface ISensorsService
 {
     public Task<GetSensorResponse> GetSensorAsync(GetSensorParams param, CancellationToken ct);

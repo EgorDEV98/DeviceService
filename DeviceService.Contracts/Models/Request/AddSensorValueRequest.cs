@@ -1,7 +1,7 @@
 namespace DeviceService.Contracts.Models.Request;
 
 /// <summary>
-/// Модель добавления показания датчика
+/// Модель добавления показателя датчика
 /// </summary>
 public class AddSensorValueRequest
 {
